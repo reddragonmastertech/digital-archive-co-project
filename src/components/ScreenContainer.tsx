@@ -5,6 +5,8 @@ import { useTheme } from '../theme';
 type ScreenContainerProps = PropsWithChildren<{
   title: string;
   subtitle?: string;
+  /** Set false for full-bleed content such as edge-to-edge sections. */
+  padded?: boolean;
 }>;
 
 /**
@@ -17,6 +19,7 @@ type ScreenContainerProps = PropsWithChildren<{
 export function ScreenContainer({
   title,
   subtitle,
+  padded = true,
   children,
 }: ScreenContainerProps) {
   const { colors, spacing, typography } = useTheme();
@@ -26,15 +29,17 @@ export function ScreenContainer({
       <ScrollView
         contentContainerStyle={[
           styles.content,
-          {
-            paddingTop: spacing.lg,
-            paddingHorizontal: spacing.lg,
-            paddingBottom: spacing.xxl,
-          },
+          padded
+            ? {
+                paddingTop: spacing.lg,
+                paddingHorizontal: spacing.lg,
+                paddingBottom: spacing.xxl,
+              }
+            : null,
         ]}
         showsVerticalScrollIndicator={false}>
-        <Text style={[typography.title, { color: colors.text }]}>{title}</Text>
-        {subtitle ? (
+        {/* <Text style={[typography.title, { color: colors.text }]}>{title}</Text> */}
+        {/* {subtitle ? (
           <Text
             style={[
               typography.body,
@@ -45,7 +50,7 @@ export function ScreenContainer({
           </Text>
         ) : (
           <View style={{ height: spacing.lg }} />
-        )}
+        )} */}
         {children}
       </ScrollView>
     </View>
